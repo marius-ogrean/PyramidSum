@@ -24,5 +24,9 @@ public class NaivePyramidSolver implements PyramidSolver {
         // the intermediate steps for calculating the sum for a specific path in the tree (since it is a tree)
         // so it will either take a lot of time or it will run out of stack memory
         //the best solution is traversing the tree depth first and retaining the maximum sum
+
+        //later edit...
+        //even if making the algorithm non recursive, it still takes a lot of time
+        //the best solution is trying to preprocess the data so that we eventually get the maximum
     }
 }
