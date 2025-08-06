@@ -1,6 +1,8 @@
 package com.ncr.test.pyramid.solver;
 
 import com.ncr.test.pyramid.data.Pyramid;
+import com.ncr.test.pyramid.data.PyramidGenerator;
+import com.ncr.test.pyramid.data.impl.RandomPyramidGenerator;
 import com.ncr.test.pyramid.solver.impl.NaivePyramidSolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,5 +41,14 @@ public class OurSolver {
     public void solverHandlesDemoData() {
         Pyramid pyramid = new Pyramid(DEMO_DATA);
         assertEquals(353, solver.pyramidMaximumTotal(pyramid), "Max path in Demo pyramid");
+    }
+
+    @Test
+    public void solverHandlesRandomData() {
+        RandomPyramidGenerator.setRandSeed(25321L);  // ensure pyramid contents
+        final PyramidGenerator generator = new RandomPyramidGenerator(5, 99);
+        final Pyramid pyramid = generator.generatePyramid();
+
+        assertEquals(398, this.solver.pyramidMaximumTotal(pyramid), "Max path in 'random' pyramid");
     }
 }
