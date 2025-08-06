@@ -19,5 +19,10 @@ public class NaivePyramidSolver implements PyramidSolver {
         long left  = myValue + getTotalAbove(row - 1, column, pyramid);
         long right = myValue + getTotalAbove(row - 1, column + 1, pyramid);
         return Math.max(left, right);
+
+        //because it is using recursion like this, for large datasets it will have to keep in memory all
+        // the intermediate steps for calculating the sum for a specific path in the tree (since it is a tree)
+        // so it will either take a lot of time or it will run out of stack memory
+        //the best solution is traversing the tree depth first and retaining the maximum sum
     }
 }
