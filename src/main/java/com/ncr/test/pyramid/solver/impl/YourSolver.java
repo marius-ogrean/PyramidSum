@@ -3,9 +3,6 @@ package com.ncr.test.pyramid.solver.impl;
 import com.ncr.test.pyramid.data.Pyramid;
 import com.ncr.test.pyramid.solver.PyramidSolver;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 /**
  * TASK: This is your 3rd task.
  * Please implement the class to satisfy the interface. *
@@ -13,40 +10,28 @@ import java.util.Deque;
 public class YourSolver implements PyramidSolver {
     @Override
     public long pyramidMaximumTotal(Pyramid pyramid) {
-        Deque<Node> stack = new ArrayDeque<>();
-
-        stack.push(new Node(pyramid.getRows() - 1, 0, 0));
-
-        long max = -1;
-
-        while (!stack.isEmpty()) {
-            Node current = stack.pop();
-
-            int myValue = pyramid.get(current.row, current.column);
-            long newSum = current.sumUpToThisPoint + myValue;
-
-            if (current.row == 0) {
-                if (newSum > max) {
-                    max = newSum;
+        for (int i = pyramid.getRows() - 2; i >= 0; i--) {
+            for (int j = 0; j < pyramid.getRows() - i; j++) {
+                if (j == 0) {
+                    pyramid.getData()[i][j] += pyramid.get(i + 1, j);
+                } else {
+                    if (pyramid.get(i + 1, j) > pyramid.get(i + 1, j - 1)) {
+                        pyramid.getData()[i][j] += pyramid.get(i + 1, j);
+                    } else {
+                        pyramid.getData()[i][j] += pyramid.get(i + 1, j - 1);
+                    }
                 }
-            } else {
-                stack.push(new Node(current.row - 1, current.column + 1, newSum));
-                stack.push(new Node(current.row - 1, current.column, newSum));
+            }
+        }
+
+        int max = -1;
+
+        for (int i = 0; i < pyramid.getRows(); i++) {
+            if (pyramid.get(0, i) > max) {
+                max = pyramid.get(0, i);
             }
         }
 
         return max;
-    }
-
-    private class Node {
-        public int row;
-        public int column;
-        public long sumUpToThisPoint;
-
-        public Node(int row, int column, long sumUpToThisPoint) {
-            this.row = row;
-            this.column = column;
-            this.sumUpToThisPoint = sumUpToThisPoint;
-        }
     }
 }
